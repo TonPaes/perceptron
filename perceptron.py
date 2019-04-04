@@ -44,9 +44,17 @@ class Perceptron(object):
             errors = 0
             # comnetario no futuro
             for xi, target in zip(X, y):
-                update = self.eta * target - self.predtic(xi)
+                update = self.eta * target - self.predict(xi)
                 self.w_[1:] += update * xi
                 self.w_[0] += update
                 errors += int(update != 0.0)
             self.erros_.append[errors]
         return self
+
+    def net_input(self, X):
+        """Calcule net input"""
+        return np.dot(X, self.w_[1:]) + self.w_[0:]
+
+    def predict(self, X):
+        """Return class label after unit step"""
+        return np.where(self.net_input(X) >= 0.0, 1, -1)
