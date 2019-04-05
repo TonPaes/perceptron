@@ -31,7 +31,7 @@ class Perceptron(object):
         ----------
         X: {array-like}, shape = [n_samples, n_features]
         Training vector.
-        Y: {array-like, shape = [n_samples]}
+        y: array-like, shape = [n_samples]
         Target values.
 
         Returns
@@ -41,11 +41,11 @@ class Perceptron(object):
         self.w_ = np.zeros(1 + X.shape[1])
         self.errors_ = []
 
-        for xi in range(self.n_iter):
+        for _ in range(self.n_iter):
             errors = 0
             # passo de correção do erro
             for xi, target in zip(X, y):
-                update = self.eta * target - self.predict(xi)
+                update = self.eta * (target - self.predict(xi))
                 self.w_[1:] += update * xi
                 self.w_[0] += update
                 errors += int(update != 0.0)
@@ -54,7 +54,7 @@ class Perceptron(object):
 
     def net_input(self, X):
         """Calcule net input"""
-        return np.dot(X, self.w_[1:]) + self.w_[0:]
+        return np.dot(X, self.w_[1:]) + self.w_[0]
 
     def predict(self, X):
         """Return class label after unit step"""
